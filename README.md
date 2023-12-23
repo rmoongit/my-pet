@@ -1,6 +1,3 @@
-<<<<<<< HEAD
-# my-pet
-=======
 ## Recommended IDE Setup
 
 [VSCode](https://code.visualstudio.com/)
@@ -23,4 +20,3 @@ npm run dev
 ```sh
 npm run build
 ```
->>>>>>> 12fea67 (init: добавляет проект)

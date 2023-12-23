@@ -1,0 +1,11 @@
+/* шрифты таймера */
+@font-face {
+	font-family: "bebas";
+	font-display: swap;
+	font-style: normal;
+	font-weight: 400;
+
+	src: url('../fonts//bebasneue-book-webfont.woff') format('woff'),
+		url('../fonts/bebasneue-book-webfont.woff2') format('woff2');
+
+  }
