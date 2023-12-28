@@ -1,6 +1,7 @@
 
 @import './reboot.css';
 @import './fonts.css';
+@import './variables.css';
 
 a,
 .green {

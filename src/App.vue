@@ -3,11 +3,11 @@
 </template>
 
 <script>
-import Tomadoro from './Tomadoro/Tomadoro.vue';
+import Timer from './Timer/Timer.vue';
 
 export default {
   components: {
-    Tomadoro: Tomadoro,
+    Timer: Timer,
   },
 };
 </script>

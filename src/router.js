@@ -1,9 +1,9 @@
 import {createRouter, createWebHistory} from 'vue-router';
 
-import Tomadoro from './Tomadoro/Tomadoro.vue';
+import Timer from './Timer/Timer.vue';
 
 // создаём массив маршрутов и их компонентов
-const routes = [{path: '/tomadoro', component: Tomadoro}];
+const routes = [{path: '/timer', component: Timer}];
 
 //создаём маршрутизатор с историей наших маршрутов
 const router = createRouter({
