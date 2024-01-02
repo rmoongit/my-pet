@@ -20,7 +20,7 @@
         </div>
       </div>
 
-      <Button :text="text"></Button>
+      <Button :text="text" :startTimer="startTimer" v-on:click="startTimer"></Button>
       <Button>
         <img :src="pathImg" width="32" height="32" alt="settings" />
       </Button>
@@ -40,8 +40,9 @@ export default {
       text: 'start',
       pathImg: '/public/Timer/images/gear.svg',
 
-      minutes: '00',
-      seconds: '00',
+      minutes: 0,
+      seconds: 0,
+      interval: null,
     };
   },
 
@@ -49,6 +50,44 @@ export default {
     Container: Container,
     TextInput: TextInput,
     Button: Button,
+  },
+
+  methods: {
+    startTimer() {
+      if (this.interval !== null) {
+        return;
+      }
+
+      let totalSeconds = this.seconds / 60;
+      this.seconds = totalSeconds;
+
+      this.interval = setInterval(() => {
+        if (this.seconds <= 0) {
+          this.minutes--;
+          this.seconds = 59;
+
+          if (this.minutes < 10) {
+            this.minutes = this.displayMinutes;
+          }
+        }
+
+        if (this.seconds < 10) {
+          this.seconds = this.displaySeconds;
+        }
+
+        this.seconds--;
+      }, 300);
+    },
+  },
+
+  computed: {
+    displayMinutes() {
+      return this.minutes.toString().padStart(2, 0);
+    },
+
+    displaySeconds() {
+      return this.seconds.toString().padStart(2, 0);
+    },
   },
 };
 </script>
