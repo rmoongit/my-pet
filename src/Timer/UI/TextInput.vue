@@ -1,5 +1,5 @@
 <template>
-  <input type="text" :value="value" :disabled="disabled" />
+  <input type="text" :value="value" :disabled="!disabled" maxlength="2" />
 </template>
 
 <script>
@@ -12,7 +12,6 @@ export default {
 
     disabled: {
       type: Boolean,
-      default: true,
     },
   },
 };

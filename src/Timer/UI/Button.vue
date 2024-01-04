@@ -1,5 +1,5 @@
 <template>
-  <button type="button" :text="text">
+  <button :class="{active: disabled}" type="button" :text="text">
     <slot>{{ text }}</slot>
   </button>
 </template>
@@ -9,6 +9,10 @@ export default {
   props: {
     text: {
       type: [String, Object],
+    },
+
+    disabled: {
+      type: Boolean,
     },
   },
 };
@@ -29,5 +33,11 @@ button {
   font-weight: 700;
 
   font-family: 'bebas', Arial, sans-serif;
+}
+
+button.active {
+  color: var(--red);
+  font-size: 20px;
+  letter-spacing: 1px;
 }
 </style>
