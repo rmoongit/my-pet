@@ -1,5 +1,5 @@
 <template>
-  <input type="text" :value="value" :disabled="!disabled" maxlength="2" />
+  <input type="text" :value="value" :disabled="disabled" maxlength="2" />
 </template>
 
 <script>

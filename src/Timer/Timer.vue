@@ -20,14 +20,11 @@
         </div>
       </div>
 
-      <Button v-bind:text="text" v-on:click="startTimer"></Button>
+      <Button v-bind:text="updateText" v-on:click="startTimer"></Button>
 
-      <Transition>
-        <Button key="1" v-if="!disabled" v-on:click="editTime">
-          <img v-bind:src="pathImg" width="32" height="32" alt="settings" />
-        </Button>
-        <Button key="2" v-else v-bind:disabled="disabled" v-on:click="editTime">edit</Button>
-      </Transition>
+      <Button v-on:click="editTime">
+        <img v-bind:src="pathImg" width="32" height="32" alt="settings" />
+      </Button>
     </section>
   </Container>
 </template>
@@ -43,10 +40,10 @@ export default {
       text: 'start',
       pathImg: '/public/Timer/images/gear.svg',
 
-      minutes: 1,
+      minutes: 0,
       seconds: 0,
       interval: null,
-      disabled: false,
+      disabled: true,
     };
   },
 
@@ -58,22 +55,27 @@ export default {
 
   methods: {
     startTimer() {
-      if (this.interval !== null) {
-        return;
+      console.log(this.minutes, this.seconds);
+
+      if (this.minutes === 0 && this.seconds === 0) return;
+
+      if (this.interval) {
+        this.clearTimer();
+      } else {
+        this.interval = setInterval(() => {
+          if (this.seconds <= 0) {
+            if (this.minutes === 0) {
+              this.clearTimer();
+              return;
+            }
+
+            this.minutes--;
+            this.seconds = 60;
+          }
+
+          this.seconds--;
+        }, 1000);
       }
-
-      this.interval = setInterval(() => {
-        if (this.minutes === 0 && this.seconds === 0) {
-          clearInterval(interval);
-        }
-
-        if (this.seconds <= 0) {
-          this.minutes--;
-          this.seconds = 59;
-        }
-
-        this.seconds--;
-      }, 300);
     },
 
     editTime() {
@@ -81,11 +83,17 @@ export default {
     },
 
     updateDisplaySeconds(event) {
-      this.seconds = event.target.value;
+      this.seconds = Number(event.target.value);
     },
 
     updateDisplayMinutes(event) {
-      this.minutes = event.target.value;
+      this.minutes = Number(event.target.value);
+    },
+
+    //чистим таймер
+    clearTimer() {
+      clearInterval(this.interval);
+      this.interval = null;
     },
   },
 
@@ -97,24 +105,15 @@ export default {
     displayMinutes: function () {
       return this.minutes.toString().padStart(2, 0);
     },
+
+    updateText: function () {
+      return this.interval !== null ? (this.text = 'pause') : (this.text = 'start');
+    },
   },
 };
 </script>
 
 <style scoped>
-/*
-  Enter and leave animations can use different
-  durations and timing functions.
-*/
-.v-enter-active,
-.v-leave-active {
-  transition: opacity 0.5s ease;
-}
-
-.v-enter-from,
-.v-leave-to {
-  opacity: 0;
-}
 .timer {
   position: relative;
   margin: 0 auto;

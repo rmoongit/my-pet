@@ -1,5 +1,5 @@
 <template>
-  <button :class="{active: disabled}" type="button" :text="text">
+  <button type="button" :text="text">
     <slot>{{ text }}</slot>
   </button>
 </template>
@@ -33,11 +33,5 @@ button {
   font-weight: 700;
 
   font-family: 'bebas', Arial, sans-serif;
-}
-
-button.active {
-  color: var(--red);
-  font-size: 20px;
-  letter-spacing: 1px;
 }
 </style>
