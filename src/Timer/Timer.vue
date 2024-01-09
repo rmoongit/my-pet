@@ -1,7 +1,7 @@
 <template>
   <Container>
     <section class="timer">
-      <div class="timer__ring">
+      <div :class="{timer__ring: true, finished: timesUp}">
         <svg width="518" height="518" viewBox="0 0 518 518">
           <rect width="100%" height="100%" fill="none"></rect>
           <circle stroke-width="9px" x="0" y="y" cx="259" cy="259" r="254"></circle>
@@ -11,11 +11,21 @@
       <div class="time">
         <div class="time__block">
           <div class="time__minutes">
-            <TextInput v-bind:value="displayMinutes" @input="updateDisplayMinutes" v-bind:disabled="disabled" />
+            <TextInput
+              v-bind:value="displayMinutes"
+              v-on:blur="updateDisplayMinutes"
+              @input="this.minutes"
+              v-bind:disabled="disabled"
+            />
           </div>
           <p class="time__colon">:</p>
           <div class="time__seconds">
-            <TextInput v-bind:value="displaySeconds" @input="updateDisplaySeconds" v-bind:disabled="disabled" />
+            <TextInput
+              v-bind:value="displaySeconds"
+              v-on:blur="updateDisplaySeconds"
+              @input="this.seconds"
+              v-bind:disabled="disabled"
+            />
           </div>
         </div>
       </div>
@@ -30,6 +40,9 @@
 </template>
 
 <script>
+import {useSound} from '@vueuse/sound';
+import audio from '../../public/Timer/audio/times-up.mp3';
+
 import Container from '../components/UI/Container.vue';
 import TextInput from '../Timer/UI/TextInput.vue';
 import Button from '../Timer/UI/Button.vue';
@@ -40,10 +53,22 @@ export default {
       text: 'start',
       pathImg: '/public/Timer/images/gear.svg',
 
-      minutes: 0,
+      minutes: 5,
       seconds: 0,
       interval: null,
       disabled: true,
+      timesUp: false,
+    };
+  },
+  //УСтанавливает мелодию
+  setup() {
+    const {play, stop} = useSound(audio, {
+      volume: 1,
+    });
+
+    return {
+      play,
+      stop,
     };
   },
 
@@ -55,9 +80,9 @@ export default {
 
   methods: {
     startTimer() {
-      console.log(this.minutes, this.seconds);
-
       if (this.minutes === 0 && this.seconds === 0) return;
+      this.timesUp = false;
+      this.stop();
 
       if (this.interval) {
         this.clearTimer();
@@ -65,6 +90,8 @@ export default {
         this.interval = setInterval(() => {
           if (this.seconds <= 0) {
             if (this.minutes === 0) {
+              this.play();
+              this.timesUp = true;
               this.clearTimer();
               return;
             }
@@ -136,6 +163,10 @@ export default {
   width: 100%;
   height: 100%;
   z-index: -1;
+}
+
+.timer__ring.finished {
+  stroke: var(--circle-red);
 }
 
 .timer__ring svg {
