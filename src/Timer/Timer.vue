@@ -1,5 +1,10 @@
 <template>
   <Container>
+    <nav>
+      <RouterLink to="Timer"> Таймер </RouterLink>
+      <!-- <RouterLink to="Other"> в процесе.. </RouterLink> -->
+    </nav>
+
     <section class="timer">
       <div :class="{timer__ring: true, finished: timesUp}">
         <svg width="518" height="518" viewBox="0 0 518 518">
@@ -12,6 +17,7 @@
         <div class="time__block">
           <div class="time__minutes">
             <TextInput
+              ref="input"
               v-bind:value="displayMinutes"
               v-on:blur="updateDisplayMinutes"
               @input="this.minutes"
@@ -28,21 +34,21 @@
             />
           </div>
         </div>
+
+        <Button v-bind:text="updateText" v-on:click="startTimer"></Button>
+
+        <Button v-on:click="editTime">
+          <img v-bind:src="imageGear" width="32" height="32" alt="settings" />
+        </Button>
       </div>
-
-      <Button v-bind:text="updateText" v-on:click="startTimer"></Button>
-
-      <Button v-on:click="editTime">
-        <img v-bind:src="pathImg" width="32" height="32" alt="settings" />
-      </Button>
     </section>
   </Container>
 </template>
 
 <script>
 import {useSound} from '@vueuse/sound';
-import audio from '../../public/Timer/audio/times-up.mp3';
-
+import audio from './audio/times-up.mp3';
+import imageGear from './images/gear.svg';
 import Container from '../components/UI/Container.vue';
 import TextInput from '../Timer/UI/TextInput.vue';
 import Button from '../Timer/UI/Button.vue';
@@ -51,12 +57,12 @@ export default {
   data() {
     return {
       text: 'start',
-      pathImg: '/public/Timer/images/gear.svg',
+      imageGear: imageGear,
 
       minutes: 5,
       seconds: 0,
       interval: null,
-      disabled: true,
+      disabled: false,
       timesUp: false,
     };
   },
@@ -76,6 +82,10 @@ export default {
     Container: Container,
     TextInput: TextInput,
     Button: Button,
+  },
+
+  mounted() {
+    this.focusInput();
   },
 
   methods: {
@@ -122,6 +132,10 @@ export default {
       clearInterval(this.interval);
       this.interval = null;
     },
+
+    focusInput() {
+      this.$refs.input.$el.focus();
+    },
   },
 
   computed: {
@@ -142,9 +156,7 @@ export default {
 
 <style scoped>
 .timer {
-  position: relative;
   margin: 0 auto;
-  top: 50px;
   font-family: 'bebas', Arial, sans-serif;
   width: 514px;
   height: 514px;
@@ -156,13 +168,9 @@ export default {
 }
 
 .timer__ring {
-  position: absolute;
   stroke: var(--circle-green);
-  left: 0;
-  top: 0;
   width: 100%;
   height: 100%;
-  z-index: -1;
 }
 
 .timer__ring.finished {
@@ -170,15 +178,20 @@ export default {
 }
 
 .timer__ring svg {
-  box-shadow: -5px 14px 44px #000000, 5px -16px 50px rgba(255, 255, 255, 0.15);
+  box-shadow: -5px 14px 100px #000000, 5px -16px 50px rgba(255, 255, 255, 0.15);
   border-radius: 50%;
-  max-width: 514px;
-  max-height: 514px;
+  width: 100%;
+  height: 100%;
 
   fill: var(--black);
 }
 
 /* time block */
+
+.time {
+  position: absolute;
+  z-index: 1;
+}
 
 .time__block {
   color: var(--white);
@@ -194,13 +207,8 @@ export default {
 
 @media (max-width: 769px) {
   .timer {
-    max-width: 280px;
-    max-height: 280px;
-  }
-
-  .timer__ring svg {
-    max-width: 280px;
-    max-height: 280px;
+    width: 280px;
+    height: 280px;
   }
 
   .time__colon {

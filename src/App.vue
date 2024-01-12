@@ -1,5 +1,7 @@
 <template>
-  <router-view></router-view>
+  <div class="main-layout">
+    <router-view></router-view>
+  </div>
 </template>
 
 <script>
@@ -12,4 +14,11 @@ export default {
 };
 </script>
 
-<style scoped></style>
+<style scoped>
+.main-layout {
+  padding-top: 50px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+</style>
