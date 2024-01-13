@@ -1,0 +1,43 @@
+<template>
+  <div class="main-block">
+    <p>{{ title }}</p>
+    <ul class="main-block__list">
+      <slot></slot>
+    </ul>
+  </div>
+</template>
+
+<script>
+export default {
+  props: {
+    title: {
+      type: String,
+      required: true,
+    },
+  },
+};
+</script>
+
+<style scoped>
+.main-block {
+  margin-top: 106px;
+  padding: 50px 0 50px 14px;
+  min-height: 812px;
+  background-color: var(--white);
+  width: 375px;
+  box-shadow: 0px 0px 70px 0px #c7cbe3;
+  border-radius: 25px;
+}
+
+.main-block p {
+  margin: 0;
+  margin-left: 27px;
+  font-weight: 700;
+  font-size: 32px;
+}
+
+.main-block__list {
+  margin: 0;
+  padding: 0;
+}
+</style>
