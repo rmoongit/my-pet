@@ -7,11 +7,12 @@ export default {
   props: {
     value: {
       type: [String, Number],
-      default: '',
+      required: true,
     },
 
     disabled: {
       type: Boolean,
+      required: true,
     },
   },
 };
@@ -28,7 +29,7 @@ input {
   color: var(--white);
 
   height: 170px;
-  width: 150px;
+  width: 170px;
 
   @media (max-width: 769px) {
     font-size: 100px;

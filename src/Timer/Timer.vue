@@ -16,29 +16,18 @@
       <div class="time">
         <div class="time__block">
           <div class="time__minutes">
-            <TextInput
-              ref="input"
-              v-bind:value="displayMinutes"
-              v-on:blur="updateDisplayMinutes"
-              @input="this.minutes"
-              v-bind:disabled="disabled"
-            />
+            <TextInput ref="input" :value="displayMinutes" @blur="updateDisplayMinutes" :disabled="disabled" />
           </div>
           <p class="time__colon">:</p>
           <div class="time__seconds">
-            <TextInput
-              v-bind:value="displaySeconds"
-              v-on:blur="updateDisplaySeconds"
-              @input="this.seconds"
-              v-bind:disabled="disabled"
-            />
+            <TextInput :value="displaySeconds" @blur="updateDisplaySeconds" :disabled="disabled" />
           </div>
         </div>
 
-        <Button v-bind:text="updateText" v-on:click="startTimer"></Button>
+        <Button @click="startTimer">{{ actionButtonText }}</Button>
 
-        <Button v-on:click="editTime">
-          <img v-bind:src="imageGear" width="32" height="32" alt="settings" />
+        <Button @click="editTime">
+          <img :src="imageGear" width="32" height="32" alt="settings" />
         </Button>
       </div>
     </section>
@@ -56,7 +45,6 @@ import Button from '../Timer/UI/Button.vue';
 export default {
   data() {
     return {
-      text: 'start',
       imageGear: imageGear,
 
       minutes: 5,
@@ -79,9 +67,9 @@ export default {
   },
 
   components: {
-    Container: Container,
-    TextInput: TextInput,
-    Button: Button,
+    Container,
+    TextInput,
+    Button,
   },
 
   mounted() {
@@ -91,6 +79,10 @@ export default {
   methods: {
     startTimer() {
       if (this.minutes === 0 && this.seconds === 0) return;
+      else if (this.seconds > 60) {
+        this.seconds = 59;
+      }
+
       this.timesUp = false;
       this.stop();
 
@@ -139,16 +131,16 @@ export default {
   },
 
   computed: {
-    displaySeconds: function () {
+    displaySeconds() {
       return this.seconds.toString().padStart(2, 0);
     },
 
-    displayMinutes: function () {
+    displayMinutes() {
       return this.minutes.toString().padStart(2, 0);
     },
 
-    updateText: function () {
-      return this.interval !== null ? (this.text = 'pause') : (this.text = 'start');
+    actionButtonText() {
+      return this.interval !== null ? 'pause' : 'start';
     },
   },
 };

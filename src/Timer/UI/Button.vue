@@ -1,22 +1,10 @@
 <template>
-  <button type="button" :text="text">
+  <button type="button">
     <slot>{{ text }}</slot>
   </button>
 </template>
 
-<script>
-export default {
-  props: {
-    text: {
-      type: [String, Object],
-    },
-
-    disabled: {
-      type: Boolean,
-    },
-  },
-};
-</script>
+<script></script>
 
 <style scoped>
 button {
