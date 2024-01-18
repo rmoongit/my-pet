@@ -23,4 +23,8 @@
 .button:hover {
   transform: scale(1.05);
 }
+
+.button.active {
+  background-color: var(--black);
+}
 </style>
