@@ -6,10 +6,7 @@
           <MenuCard
             v-for="(card, index) in mocksData"
             :key="card.id"
-            :id="card.id"
-            :img="card.img"
-            :title="card.title"
-            :price="card.price"
+            :card="card"
             @add-to-cart="addToCart"
             :style="`--bg-color: ${colors[index % colors.length]}`"
           />
@@ -38,8 +35,9 @@ export default {
         'rgba(120, 247, 187, 0.20)',
       ],
 
+      cart: [],
+
       mocksData: mocks,
-      inCart: false,
     };
   },
 
@@ -50,8 +48,8 @@ export default {
   },
 
   methods: {
-    addToCart(id) {
-      console.log('Добавил в корзину: ', id);
+    addToCart(card) {
+      console.log('Добавил в корзину: ', card);
     },
   },
 };

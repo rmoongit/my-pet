@@ -21,7 +21,7 @@ export default {
 <style scoped>
 .main-block {
   margin-top: 106px;
-  padding: 50px 0 50px 14px;
+  padding: 50px 0 50px 27px;
   height: 812px;
   background-color: var(--white);
   width: 375px;
@@ -32,7 +32,7 @@ export default {
 
 .main-block__title {
   margin: 0;
-  margin-bottom: 20px;
+  margin-bottom: 37px;
   margin-left: 27px;
   font-weight: 700;
   font-size: 32px;
