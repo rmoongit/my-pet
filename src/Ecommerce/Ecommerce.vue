@@ -2,17 +2,23 @@
   <section class="commerce">
     <Container>
       <div class="commerce__wrapper">
-        <MainBlock :title="`To Go Menu`">
-          <MenuCard
-            v-for="(card, index) in mocksData"
-            :key="card.id"
-            :card="card"
-            @add-to-cart="addToCart"
-            :style="`--bg-color: ${colors[index % colors.length]}`"
-          />
-        </MainBlock>
+        <MenuWrapper :title="`To Go Menu`">
+          <MenuBlock>
+            <Card
+              v-for="(card, index) in mocksData"
+              :key="card.id"
+              :card="card"
+              @add-to-cart="addToCart(card)"
+              :style="`--bg-color: ${colors[index % colors.length]}`"
+            /> </MenuBlock
+        ></MenuWrapper>
 
-        <MainBlock :title="`Your Cart`"></MainBlock>
+        <MenuWrapper :title="`Your Cart`">
+          <CartBlock v-if="cart.length">
+            <AddedCard v-for="addedCard in cart" :key="addedCard.id" :addedCard="addedCard" />
+          </CartBlock>
+          <div v-else><h1 :style="{textAlign: 'center', margin: '0'}">Your cart is Empty&#128519;</h1></div>
+        </MenuWrapper>
       </div>
     </Container>
   </section>
@@ -20,8 +26,11 @@
 
 <script>
 import Container from '../components/UI/Container.vue';
-import MainBlock from './components/MainBlock.vue';
-import MenuCard from './components/MenuCard.vue';
+import MenuWrapper from './components/MenuWrapper.vue';
+import MenuBlock from './components/MenuBlock.vue';
+import CartBlock from './components/CartBlock.vue';
+import Card from './components/Card.vue';
+import AddedCard from './components/AddedCard.vue';
 
 import mocks from './data/data';
 
@@ -43,13 +52,17 @@ export default {
 
   components: {
     Container,
-    MainBlock,
-    MenuCard,
+    MenuWrapper,
+    MenuBlock,
+    CartBlock,
+    Card,
+    AddedCard,
   },
 
   methods: {
     addToCart(card) {
       console.log('Добавил в корзину: ', card);
+      this.cart.push(card);
     },
   },
 };
