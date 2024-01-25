@@ -9,13 +9,14 @@
               :key="card.id"
               :card="card"
               @add-to-cart="addToCart(card)"
+              @remove-card="removeFromCart(card)"
               :style="`--bg-color: ${colors[index % colors.length]}`"
             /> </MenuBlock
         ></MenuWrapper>
 
         <MenuWrapper :title="`Your Cart`">
-          <CartBlock v-if="cart.length">
-            <AddedCard v-for="addedCard in cart" :key="addedCard.id" :addedCard="addedCard" />
+          <CartBlock v-if="cart.length" :cart="cart">
+            <AddedCard v-for="addedCard in cart" :key="addedCard.id" :addedCard="addedCard" :arrowImg="arrowImg" />
           </CartBlock>
           <div v-else><h1 :style="{textAlign: 'center', margin: '0'}">Your cart is Empty&#128519;</h1></div>
         </MenuWrapper>
@@ -33,6 +34,7 @@ import Card from './components/Card.vue';
 import AddedCard from './components/AddedCard.vue';
 
 import mocks from './data/data';
+import arrowImg from './images/svg/chevron.svg';
 
 export default {
   data() {
@@ -45,7 +47,7 @@ export default {
       ],
 
       cart: [],
-
+      arrowImg,
       mocksData: mocks,
     };
   },
@@ -60,9 +62,19 @@ export default {
   },
 
   methods: {
+    //Добавляет товар в корзину
     addToCart(card) {
-      console.log('Добавил в корзину: ', card);
-      this.cart.push(card);
+      const findCard = this.cart.find((item) => card.id === item.id);
+
+      if (findCard) {
+        return;
+      }
+
+      this.cart.push({...card, count: 1});
+    },
+    //Удаляет товар из корзины
+    removeFromCart(card) {
+      this.cart = this.cart.filter((item) => item.id !== card.id);
     },
   },
 };
@@ -88,5 +100,6 @@ export default {
   align-items: center;
   justify-content: center;
   column-gap: 50px;
+  padding: 106px 0;
 }
 </style>

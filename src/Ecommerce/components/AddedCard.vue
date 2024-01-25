@@ -10,34 +10,49 @@
 
       <div class="added-card__counter">
         <div class="added-card__control">
-          <button class="added-card__button" type="button">
+          <button @click="reduceCount" class="added-card__button" type="button">
             <img :src="arrowImg" width="7" height="14" alt="стрелочка" />
           </button>
-          <span class="added-card__count">1</span>
-          <button class="added-card__button added-card__button--right" type="button">
+          <span class="added-card__count">{{ addedCard.count }}</span>
+          <button @click="increaseCount" class="added-card__button added-card__button--right" type="button">
             <img :src="arrowImg" width="7" height="14" alt="стрелочка" />
           </button>
         </div>
-        <p class="added-card__total">$1</p>
+        <p class="added-card__total">${{ addedCard.price }}</p>
       </div>
     </div>
   </li>
 </template>
 
 <script>
-import arrowImg from '../images/svg/chevron.svg';
-
 export default {
-  data() {
-    return {
-      arrowImg,
-    };
-  },
-
   props: {
     addedCard: {
       type: Object,
       required: true,
+    },
+
+    arrowImg: {
+      type: String,
+      required: true,
+    },
+  },
+
+  methods: {
+    //увеличиваем count товара
+    increaseCount() {
+      if (this.addedCard.count >= 10) {
+        return;
+      }
+      this.addedCard.count++;
+    },
+
+    //уменьшаем count товара
+    reduceCount() {
+      if (this.addedCard.count <= 0) {
+        return;
+      }
+      this.addedCard.count--;
     },
   },
 };
@@ -50,6 +65,9 @@ export default {
   width: 100%;
 }
 
+.added-card__inner {
+  width: 100%;
+}
 .added-card:not(:last-child) {
   margin-bottom: 77px;
 }
@@ -77,6 +95,8 @@ export default {
 /* counter block */
 .added-card__counter {
   display: flex;
+  flex-wrap: wrap;
+  row-gap: 10px;
   align-items: center;
   justify-content: space-between;
 }

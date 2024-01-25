@@ -5,14 +5,51 @@
     </ul>
 
     <div class="cart-block__total">
-      <p>Subtotal:<span>$</span></p>
-      <p>Tax:<span>$</span></p>
-      <p>Total:<span>$</span></p>
+      <p>
+        Subtotal:<span>${{ getSubtotal }}</span>
+      </p>
+      <p>
+        Tax:<span>${{ getTax }}</span>
+      </p>
+      <p>
+        Total:<span>${{ getTotal }}</span>
+      </p>
     </div>
   </div>
 </template>
 
-<script></script>
+<script>
+export default {
+  data() {
+    return {
+      tax: 0.0975,
+      total: 0,
+    };
+  },
+
+  props: {
+    cart: {
+      type: Object,
+      required: true,
+    },
+  },
+
+  computed: {
+    //Подсчёт общий без налога
+    getSubtotal() {
+      return this.cart.reduce((acc, item) => acc + item.price * item.count, 0).toFixed(2);
+    },
+    //Подсчёт налога
+    getTax() {
+      return this.cart.reduce((acc, item) => acc + item.price * item.count * this.tax, 0).toFixed(2);
+    },
+    //Подсчёт общего счёта с налогом
+    getTotal() {
+      return (+this.getSubtotal + +this.getTax).toFixed(2);
+    },
+  },
+};
+</script>
 
 <style scoped>
 .cart-block__wrapper {
@@ -21,7 +58,7 @@
 
 .cart-block__list {
   max-height: 335px;
-  overflow-x: hidden;
+  overflow-y: auto;
   margin: 0;
   margin-bottom: 40px;
   padding: 0;
@@ -46,6 +83,7 @@
 }
 
 .cart-block__total span {
+  width: 130px;
   font-size: 32px;
   line-height: 32px;
 }

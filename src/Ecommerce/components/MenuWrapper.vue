@@ -18,7 +18,6 @@ export default {
 
 <style scoped>
 .menu-wrapper {
-  margin-top: 106px;
   padding-top: 50px;
   padding-bottom: 50px;
   height: 812px;

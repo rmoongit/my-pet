@@ -33,7 +33,14 @@ export default {
   methods: {
     onButtonClick(card) {
       this.inCart = !this.inCart;
-      this.$emit('add-to-cart', card);
+
+      if (this.inCart) {
+        this.$emit('add-to-cart', card);
+      }
+
+      if (!this.inCart) {
+        this.$emit('remove-card', card);
+      }
     },
   },
 };

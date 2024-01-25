@@ -32,3 +32,26 @@ a::after {
 	width: 100%;
   }
 }
+
+/* Scroll bar stylings */
+::-webkit-scrollbar {
+    width: 5px;
+    height: 5px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+    background: var(----background-color);
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+	background: var(--primary-purple);
+	border-radius: 5px;
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+	background: var(--grey); 
+
+}
