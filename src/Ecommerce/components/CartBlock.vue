@@ -23,7 +23,6 @@ export default {
   data() {
     return {
       tax: 0.0975,
-      total: 0,
     };
   },
 

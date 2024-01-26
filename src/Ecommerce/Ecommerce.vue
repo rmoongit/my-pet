@@ -16,7 +16,14 @@
 
         <MenuWrapper :title="`Your Cart`">
           <CartBlock v-if="cart.length" :cart="cart">
-            <AddedCard v-for="addedCard in cart" :key="addedCard.id" :addedCard="addedCard" :arrowImg="arrowImg" />
+            <AddedCard
+              v-for="addedCard in cart"
+              :key="addedCard.id"
+              :addedCard="addedCard"
+              :arrowImg="arrowImg"
+              :binImg="binImg"
+              @remove-from-cart="removeFromCart(addedCard)"
+            />
           </CartBlock>
           <div v-else><h1 :style="{textAlign: 'center', margin: '0'}">Your cart is Empty&#128519;</h1></div>
         </MenuWrapper>
@@ -35,6 +42,7 @@ import AddedCard from './components/AddedCard.vue';
 
 import mocks from './data/data';
 import arrowImg from './images/svg/chevron.svg';
+import binImg from './images/svg/bin.svg';
 
 export default {
   data() {
@@ -48,6 +56,7 @@ export default {
 
       cart: [],
       arrowImg,
+      binImg,
       mocksData: mocks,
     };
   },

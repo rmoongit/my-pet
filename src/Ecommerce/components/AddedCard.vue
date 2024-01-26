@@ -1,6 +1,11 @@
 <template>
   <li class="added-card">
-    <img class="added-card__img" :src="addedCard.img" width="64" height="63" alt="Товар в корзине" />
+    <figure class="added-card__figure">
+      <img class="added-card__img" :src="addedCard.img" width="64" height="63" alt="Товар в корзине" loading="lazy" />
+      <p class="added-card__img-counter">
+        <span>{{ addedCard.count }}</span>
+      </p>
+    </figure>
 
     <div class="added-card__inner">
       <div class="added-card__content">
@@ -21,6 +26,10 @@
         <p class="added-card__total">${{ addedCard.price }}</p>
       </div>
     </div>
+
+    <button class="added-card__close" @click="removeFromCart">
+      <img :src="binImg" width="21" height="21" alt="Удалить" />
+    </button>
   </li>
 </template>
 
@@ -36,23 +45,33 @@ export default {
       type: String,
       required: true,
     },
+
+    binImg: {
+      type: String,
+      required: true,
+    },
   },
 
   methods: {
     //увеличиваем count товара
     increaseCount() {
-      if (this.addedCard.count >= 10) {
-        return;
-      }
+      if (this.addedCard.count >= 10) return;
       this.addedCard.count++;
     },
 
     //уменьшаем count товара
     reduceCount() {
-      if (this.addedCard.count <= 0) {
+      if (this.addedCard.count === 0) {
+        this.removeFromCart();
         return;
       }
+
       this.addedCard.count--;
+    },
+
+    //Вешаем событие на кнопку
+    removeFromCart(card) {
+      this.$emit('remove-from-cart', card);
     },
   },
 };
@@ -60,6 +79,7 @@ export default {
 
 <style scoped>
 .added-card {
+  position: relative;
   display: flex;
   column-gap: 18px;
   width: 100%;
@@ -76,9 +96,28 @@ export default {
   margin-bottom: 16px;
 }
 
-.added-card .added-card__img {
+.added-card__figure {
+  position: relative;
   width: 64px;
   height: 63px;
+  margin: 0;
+  flex-shrink: 0;
+}
+
+.added-card__img-counter {
+  margin: 0;
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  background-color: var(--black);
+  color: var(--white);
+  width: 32px;
+  height: 32px;
+  text-align: center;
+  font-weight: 700;
+  border-radius: 20px;
+  padding: 5px;
 }
 
 .added-card__text {
@@ -141,5 +180,17 @@ export default {
   font-size: 32px;
   line-height: 32px;
   font-weight: 700;
+}
+
+.added-card__close {
+  position: absolute;
+  z-index: 10;
+  padding: 5px;
+  bottom: 0;
+  left: 15px;
+
+  background-color: transparent;
+  border: none;
+  cursor: pointer;
 }
 </style>

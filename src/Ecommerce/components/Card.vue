@@ -1,10 +1,10 @@
 <template>
   <li class="card">
-    <img :src="card.img" width="148" height="144" alt="карточка товара" />
+    <img :src="card.img" width="148" height="144" alt="карточка товара" loading="lazy" />
     <div class="card__content">
       <p class="card__text">{{ card.title }}</p>
       <p class="card__price">${{ card.price }}</p>
-      <Button :inCart="inCart" @click="onButtonClick(card)" />
+      <Button :inCart="inCart" @click="onButtonClick" />
     </div>
   </li>
 </template>
