@@ -9,7 +9,8 @@
               :key="card.id"
               :card="card"
               @add-to-cart="addToCart(card)"
-              @remove-card="removeFromCart(card)"
+              @remove-from-cart="removeFromCart(card)"
+              :isInCart="checkIsInCart(card)"
               :style="`--bg-color: ${colors[index % colors.length]}`"
             /> </MenuBlock
         ></MenuWrapper>
@@ -84,6 +85,11 @@ export default {
     //Удаляет товар из корзины
     removeFromCart(card) {
       this.cart = this.cart.filter((item) => item.id !== card.id);
+    },
+
+    //Проверка товара в корзине
+    checkIsInCart(card) {
+      return this.cart.some((item) => item.id === card.id);
     },
   },
 };

@@ -4,7 +4,7 @@
     <div class="card__content">
       <p class="card__text">{{ card.title }}</p>
       <p class="card__price">${{ card.price }}</p>
-      <Button :inCart="inCart" @click="onButtonClick" />
+      <Button @click="checkHandler" />
     </div>
   </li>
 </template>
@@ -13,16 +13,14 @@
 import Button from '../UI/ButtonCard.vue';
 
 export default {
-  data() {
-    return {
-      inCart: false,
-    };
-  },
-
   props: {
     card: {
       type: Object,
       required: true,
+    },
+
+    isInCart: {
+      type: Object,
     },
   },
 
@@ -31,15 +29,11 @@ export default {
   },
 
   methods: {
-    onButtonClick(card) {
-      this.inCart = !this.inCart;
-
-      if (this.inCart) {
-        this.$emit('add-to-cart', card);
-      }
-
-      if (!this.inCart) {
-        this.$emit('remove-card', card);
+    checkHandler(card) {
+      this.$emit('add-to-cart', card);
+	  console.log(this.isIncart)
+      if (this.isInCart) {
+        this.$emit('remove-from-cart', card);
       }
     },
   },
