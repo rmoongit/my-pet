@@ -1,8 +1,7 @@
 <template>
   <Container>
     <nav>
-      <RouterLink to="Timer"> Таймер </RouterLink>
-      <!-- <RouterLink to="Other"> в процесе.. </RouterLink> -->
+      <RouterLink to="Ecommerce">На Ecommerce </RouterLink>
     </nav>
 
     <section class="timer">
