@@ -1,7 +1,7 @@
 <template>
-  <button class="button">
-    <!-- <img v-if="isIncart" class="button__icon" :src="checkIcon" alt="галочка корзины" /> -->
-    <span>Add to Cart</span>
+  <button :class="[inCart ? 'button active' : 'button']">
+    <img v-if="inCart" class="button__icon" :src="checkIcon" alt="галочка корзины" />
+    <span>{{ inCart ? 'In Cart' : 'Add to Cart' }}</span>
   </button>
 </template>
 
@@ -16,9 +16,9 @@ export default {
   },
 
   props: {
-    // isIncart: {
-    //   type: Object,
-    // },
+    inCart: {
+      type: Boolean,
+    },
   },
 };
 </script>

@@ -4,12 +4,13 @@
     <div class="card__content">
       <p class="card__text">{{ card.title }}</p>
       <p class="card__price">${{ card.price }}</p>
-      <Button @click="checkHandler" />
+      <Button @click="checkHandler" :inCart="isInCart" />
     </div>
   </li>
 </template>
 
 <script>
+import {nextTick} from 'vue';
 import Button from '../UI/ButtonCard.vue';
 
 export default {
@@ -20,7 +21,7 @@ export default {
     },
 
     isInCart: {
-      type: Object,
+      type: Boolean,
     },
   },
 
@@ -29,11 +30,12 @@ export default {
   },
 
   methods: {
-    checkHandler(card) {
-      this.$emit('add-to-cart', card);
-	  console.log(this.isIncart)
+    async checkHandler(card) {
       if (this.isInCart) {
-        this.$emit('remove-from-cart', card);
+        await this.$emit('remove-from-cart', card);
+      } else {
+        await this.$emit('add-to-cart', card);
+        await nextTick();
       }
     },
   },

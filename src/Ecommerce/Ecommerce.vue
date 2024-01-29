@@ -1,6 +1,9 @@
 <template>
   <section class="commerce">
     <Container>
+      <nav>
+        <RouterLink to="Timer">На Timer</RouterLink>
+      </nav>
       <div class="commerce__wrapper">
         <MenuWrapper :title="`To Go Menu`">
           <MenuBlock>
@@ -21,8 +24,6 @@
               v-for="addedCard in cart"
               :key="addedCard.id"
               :addedCard="addedCard"
-              :arrowImg="arrowImg"
-              :binImg="binImg"
               @remove-from-cart="removeFromCart(addedCard)"
             />
           </CartBlock>
@@ -42,8 +43,6 @@ import Card from './components/Card.vue';
 import AddedCard from './components/AddedCard.vue';
 
 import mocks from './data/data';
-import arrowImg from './images/svg/chevron.svg';
-import binImg from './images/svg/bin.svg';
 
 export default {
   data() {
@@ -56,8 +55,6 @@ export default {
       ],
 
       cart: [],
-      arrowImg,
-      binImg,
       mocksData: mocks,
     };
   },
@@ -76,11 +73,9 @@ export default {
     addToCart(card) {
       const findCard = this.cart.find((item) => card.id === item.id);
 
-      if (findCard) {
-        return;
+      if (!findCard) {
+        this.cart.push({...card, count: 1});
       }
-
-      this.cart.push({...card, count: 1});
     },
     //Удаляет товар из корзины
     removeFromCart(card) {
@@ -115,6 +110,6 @@ export default {
   align-items: center;
   justify-content: center;
   column-gap: 50px;
-  padding: 106px 0;
+  padding: 50px 0;
 }
 </style>

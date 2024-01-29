@@ -34,20 +34,20 @@
 </template>
 
 <script>
+import arrowImg from '../images/svg/chevron.svg';
+import binImg from '../images/svg/bin.svg';
+
 export default {
+  data() {
+    return {
+      arrowImg,
+      binImg,
+    };
+  },
+
   props: {
     addedCard: {
       type: Object,
-      required: true,
-    },
-
-    arrowImg: {
-      type: String,
-      required: true,
-    },
-
-    binImg: {
-      type: String,
       required: true,
     },
   },

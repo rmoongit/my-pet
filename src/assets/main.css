@@ -3,6 +3,13 @@
 @import './fonts.css';
 @import './variables.css';
 
+nav {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	padding: 25px;
+}
+
 a,
 .green {
   position: relative;
