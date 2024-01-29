@@ -16,7 +16,6 @@ export default {
 
 <style scoped>
 .main-layout {
-  padding-top: 50px;
   display: flex;
   flex-direction: column;
   align-items: center;
